@@ -1,1 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Prioritizing Content Pages for Search Performance Review</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f5;
+            color: #202124;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 60px 28px;
+        }
+
+        header {
+            padding: 50px 0 40px;
+            border-bottom: 1px solid #d9d9d4;
+        }
+
+        .eyebrow {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin: 0 0 20px;
+            max-width: 850px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #666;
+            max-width: 750px;
+            margin-bottom: 25px;
+        }
+
+        .author {
+            font-size: 15px;
+            color: #555;
+        }
+
+        section {
+            padding: 45px 0;
+            border-bottom: 1px solid #deded9;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin: 0 0 22px;
+        }
+
+        h3 {
+            font-size: 21px;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 17px;
+            max-width: 820px;
+        }
+
+        ul, ol {
+            max-width: 820px;
+            font-size: 17px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .abstract {
+            background: #ffffff;
+            padding: 30px;
+            border-left: 5px solid #222;
+            margin-top: 30px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin: 30px 0;
+        }
+
+        .metric {
+            background: #ffffff;
+            padding: 25px;
+            border: 1px solid #deded9;
+        }
+
+        .metric-number {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            font-weight: bold;
+            background: #f1f1ed;
+        }
+
+        .chart {
+            background: white;
+            border: 1px solid #deded9;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .bar-row {
+            margin: 20px 0;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .bar-container {
+            width: 100%;
+            height: 32px;
+            background: #e8e8e3;
+        }
+
+        .bar {
+            height: 100%;
+            background: #222;
+        }
+
+        .bar.baseline {
+            width: 76%;
+        }
+
+        .bar.model {
+            width: 86%;
+        }
+
+        .callout {
+            background: #202124;
+            color: white;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .callout p {
+            margin: 0;
+        }
+
+        .code-like {
+            background: #1f1f1f;
+            color: #f1f1f1;
+            padding: 20px;
+            font-family: Consolas, monospace;
+            overflow-x: auto;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .tier {
+            border: 1px solid #ddd;
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .tier strong {
+            font-size: 18px;
+        }
+
+        footer {
+            padding: 45px 0 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        a {
+            color: #222;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 35px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+
+        <div class="eyebrow">
+            Machine Learning Research
+        </div>
+
+        <h1>
+            Prioritizing Content Pages for Search Performance Review
+        </h1>
+
+        <div class="subtitle">
+            A machine learning ranking experiment using observed search-performance signals
+        </div>
+
+        <div class="author">
+            Sarah Njunge · FlyRank ML Internship Capstone · 2026
+        </div>
+
+    </header>
+
+
+    <!-- ABSTRACT -->
+
+    <section>
+
+        <h2>Abstract</h2>
+
+        <div class="abstract">
+
+            <p>
+                This study asks which content pages should be reviewed first when a content team has limited review capacity.
+                Using the FlyRank internship warehouse, I aggregated eight historical search-performance features over January–March 2026 and defined an attention outcome as an April impression decline of more than 20% relative to March.
+                A Logistic Regression model was evaluated against a historical-impressions baseline using the same client-grouped held-out test set.
+                The model achieved 86.0% Precision@50 compared with 76.0% for the baseline, identifying 43 attention pages in the top 50 compared with 38 for the baseline.
+                The result supports using observed search-performance signals as decision support for human review, rather than treating the model as a causal diagnosis or a guarantee of future performance.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>1. Introduction</h2>
+
+        <h3>Problem statement</h3>
+
+        <p>
+            Content teams may have thousands of pages but limited capacity to review them manually.
+            The practical question is therefore not simply whether a page's search performance changes, but:
+            <strong>which pages should be reviewed first?</strong>
+        </p>
+
+        <p>
+            This project frames the problem as a prioritization task.
+            Instead of attempting to predict the future performance of every page, the model produces a ranked review queue using historical search-performance signals.
+        </p>
+
+        <div class="callout">
+            <p>
+                <strong>Decision supported:</strong>
+                prioritize a limited content-review queue using observed historical search-performance signals.
+            </p>
+        </div>
+
+        <p>
+            The output is intended for human decision support.
+            A high model score indicates that a page resembles pages that met the defined attention criterion in the evaluation data.
+            It does not establish why performance changed or what action will necessarily improve it.
+        </p>
+
+    </section>
+
+
+    <!-- DATA -->
+
+    <section>
+
+        <h2>2. Data</h2>
+
+        <p>
+            The analysis uses the
+            <strong>FlyRank internship-warehouse</strong>
+            release.
+            The warehouse contains daily content-performance records covering approximately January 2025 through June 2026.
+        </p>
+
+        <h3>Data used</h3>
+
+        <table>
+
+            <tr>
+                <th>Component</th>
+                <th>Role</th>
+            </tr>
+
+            <tr>
+                <td>fact_content_daily_performance</td>
+                <td>Daily search-performance measurements</td>
+            </tr>
+
+            <tr>
+                <td>dim_content</td>
+                <td>Content-page reference information</td>
+            </tr>
+
+            <tr>
+                <td>dim_clients</td>
+                <td>Client grouping for validation</td>
+            </tr>
+
+        </table>
+
+        <h3>Feature window</h3>
+
+        <p>
+            Historical features were calculated using observations from
+            <strong>1 January 2026 through 31 March 2026</strong>.
+        </p>
+
+        <p>
+            Pages were required to have at least 60 days with observed Google Search Console data during this period.
+            This produced 70,432 pages before matching with the outcome period.
+        </p>
+
+        <h3>Outcome window</h3>
+
+        <p>
+            The evaluation outcome used
+            <strong>1 April 2026 through 30 April 2026</strong>.
+        </p>
+
+        <p>
+            A page was labelled as needing attention when its April impressions were more than 20% below its March impressions.
+            Pages were also required to have at least 100 March impressions to reduce noise from very small denominators.
+        </p>
+
+        <div class="highlight-grid">
+
+            <div class="metric">
+                <div class="metric-number">63,597</div>
+                <div class="metric-label">
+                    Pages in final modeling dataset
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-number">54.9%</div>
+                <div class="metric-label">
+                    Pages meeting attention criterion
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-number">8</div>
+                <div class="metric-label">
+                    Historical features
+                </div>
+            </div>
+
+        </div>
+
+        <h3>Public-safe handling</h3>
+
+        <p>
+            The public paper does not expose client names, domains, page URLs, private search queries, credentials, or raw identifying content records.
+            Results are presented as an anonymized research workflow.
+        </p>
+
+    </section>
+
+
+    <!-- METHODOLOGY -->
+
+    <section>
+
+        <h2>3. Methodology</h2>
+
+        <h3>Features</h3>
+
+        <p>
+            Eight historical search-performance features were calculated from the January–March window:
+        </p>
+
+        <ul>
+            <li>GSC observed days</li>
+            <li>90-day impressions</li>
+            <li>90-day clicks</li>
+            <li>90-day click-through rate</li>
+            <li>90-day average search position</li>
+            <li>90-day position volatility</li>
+            <li>Average daily impressions</li>
+            <li>Average daily clicks</li>
+        </ul>
+
+        <h3>Target definition</h3>
+
+        <p>
+            The target variable was:
+        </p>
+
+        <div class="code-like">
+            needs_attention = April impressions &lt; 80% of March impressions
+        </div>
+
+        <p>
+            This is a directional performance label.
+            It does not mean that the page is objectively poor or that its content caused the change.
+        </p>
+
+        <h3>Baseline</h3>
+
+        <p>
+            The baseline ranks pages using historical 90-day impressions.
+            The top 50 pages from this ranking form the baseline review queue.
+        </p>
+
+        <h3>Machine learning model</h3>
+
+        <p>
+            The model is a Logistic Regression pipeline with median imputation and feature standardization.
+            The model produces a probability score for each page, which is then used to rank the review queue.
+        </p>
+
+        <h3>Validation design</h3>
+
+        <p>
+            A GroupShuffleSplit was used with
+            <strong>client_hash_id</strong>
+            as the grouping variable.
+            This keeps pages from the same client together when creating the training and held-out test sets.
+        </p>
+
+        <p>
+            The final test set contained
+            <strong>970 pages</strong>.
+            Both the historical-impressions baseline and the ML model were evaluated on this same held-out set.
+        </p>
+
+        <h3>Leakage check</h3>
+
+        <p>
+            Features were calculated only from January–March data.
+            April outcome measurements were used only for evaluation and label construction.
+            April outcome variables were not included among the model features.
+        </p>
+
+        <div class="callout">
+            <p>
+                <strong>Leakage audit:</strong>
+                feature period and outcome period were separated, and the April outcome was excluded from the model inputs.
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- RESULTS -->
+
+    <section>
+
+        <h2>4. Results</h2>
+
+        <p>
+            The main evaluation metric is
+            <strong>Precision@50</strong>.
+            This measures the proportion of the first 50 ranked pages that met the defined attention criterion.
+        </p>
+
+        <div class="highlight-grid">
+
+            <div class="metric">
+                <div class="metric-number">76.0%</div>
+                <div class="metric-label">
+                    Historical-impressions baseline
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-number">86.0%</div>
+                <div class="metric-label">
+                    Logistic Regression model
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-number">+10 pp</div>
+                <div class="metric-label">
+                    Difference in Precision@50
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="chart">
+
+            <h3>Precision@50 comparison</h3>
+
+            <div class="bar-row">
+
+                <div class="bar-label">
+                    <span>Historical-impressions baseline</span>
+                    <span>76%</span>
+                </div>
+
+                <div class="bar-container">
+                    <div class="bar baseline"></div>
+                </div>
+
+            </div>
+
+
+            <div class="bar-row">
+
+                <div class="bar-label">
+                    <span>Logistic Regression</span>
+                    <span>86%</span>
+                </div>
+
+                <div class="bar-container">
+                    <div class="bar model"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h3>Top-50 results</h3>
+
+        <table>
+
+            <tr>
+                <th>Method</th>
+                <th>Precision@50</th>
+                <th>Attention pages</th>
+            </tr>
+
+            <tr>
+                <td>Historical impressions</td>
+                <td>76.0%</td>
+                <td>38 / 50</td>
+            </tr>
+
+            <tr>
+                <td>Logistic Regression</td>
+                <td>86.0%</td>
+                <td>43 / 50</td>
+            </tr>
+
+        </table>
+
+        <p>
+            Within the same 50-page review budget, the ML ranking identified five more pages meeting the defined attention criterion than the historical-impressions baseline.
+        </p>
+
+
+        <h3>Precision across review queue sizes</h3>
+
+        <table>
+
+            <tr>
+                <th>Queue size</th>
+                <th>Precision</th>
+            </tr>
+
+            <tr>
+                <td>Top 10</td>
+                <td>80.0%</td>
+            </tr>
+
+            <tr>
+                <td>Top 20</td>
+                <td>85.0%</td>
+            </tr>
+
+            <tr>
+                <td>Top 50</td>
+                <td>86.0%</td>
+            </tr>
+
+            <tr>
+                <td>Top 100</td>
+                <td>86.0%</td>
+            </tr>
+
+            <tr>
+                <td>Top 200</td>
+                <td>85.5%</td>
+            </tr>
+
+        </table>
+
+
+        <h3>Ranking overlap</h3>
+
+        <p>
+            Only 2 of the top 50 pages appeared in both the ML and baseline rankings.
+            This means the two approaches selected substantially different review queues.
+        </p>
+
+        <p>
+            Among the pages selected exclusively by each method, 41 of 48 ML-only pages met the attention criterion, compared with 36 of 48 baseline-only pages.
+        </p>
+
+
+        <h3>Secondary metric</h3>
+
+        <p>
+            The Logistic Regression model achieved
+            <strong>0.581 balanced accuracy</strong>
+            on the held-out test set.
+        </p>
+
+        <p>
+            Precision@50 remains the primary metric because the intended use case is prioritizing a limited review queue rather than classifying every page equally.
+        </p>
+
+    </section>
+
+
+    <!-- LIMITATIONS -->
+
+    <section>
+
+        <h2>5. Limitations & Honest Framing</h2>
+
+        <h3>The outcome is directional</h3>
+
+        <p>
+            The attention label is based on an observed change in impressions.
+            A decline in impressions does not establish why the decline happened.
+        </p>
+
+        <h3>The model does not establish causality</h3>
+
+        <p>
+            Historical associations between features and the attention score should not be interpreted as causal relationships.
+            The analysis does not establish that changing one of these features would improve search performance.
+        </p>
+
+        <h3>One evaluation period</h3>
+
+        <p>
+            The experiment uses January–March 2026 features and an April 2026 outcome.
+            Results may differ across other time periods, clients, industries, or search environments.
+        </p>
+
+        <h3>Client-held-out, not future deployment validation</h3>
+
+        <p>
+            The validation split separates clients between training and testing.
+            However, this remains a single held-out experiment rather than a true forward-time production evaluation.
+        </p>
+
+        <h3>Uneven search-data availability</h3>
+
+        <p>
+            Google Search Console data is not available for every page and every day.
+            The analysis therefore represents pages with sufficient observed history rather than every page in the warehouse.
+        </p>
+
+        <h3>Thresholds are modeling choices</h3>
+
+        <p>
+            The 20% decline threshold and minimum 100 March impressions were chosen for this experiment.
+            Different thresholds could produce different labels and model performance.
+        </p>
+
+        <h3>Not a complete content recommendation system</h3>
+
+        <p>
+            The model prioritizes pages for human review.
+            It does not automatically determine which content changes should be made or measure whether an intervention improves performance.
+        </p>
+
+    </section>
+
+
+    <!-- RECOMMENDATIONS -->
+
+    <section>
+
+        <h2>6. Ranked Recommendations</h2>
+
+        <p>
+            The model produces a ranked review queue using predicted probabilities from the Logistic Regression model.
+            The ranking is intended to determine where limited human review capacity can be allocated first.
+        </p>
+
+
+        <div class="tier">
+
+            <strong>High priority — Top 50</strong>
+
+            <p>
+                Pages in the top 50 are considered first for human review.
+            </p>
+
+        </div>
+
+
+        <div class="tier">
+
+            <strong>Medium priority — Ranks 51–100</strong>
+
+            <p>
+                Pages ranked 51–100 form the next review group when additional capacity is available.
+            </p>
+
+        </div>
+
+
+        <div class="tier">
+
+            <strong>Lower priority — Below 100</strong>
+
+            <p>
+                Pages below rank 100 remain eligible for review when business context or new evidence suggests attention is appropriate.
+            </p>
+
+        </div>
+
+
+        <h3>Human review playbook</h3>
+
+        <ol>
+
+            <li>
+                Check the recent impressions and clicks trend against the historical period.
+            </li>
+
+            <li>
+                Examine click-through rate and average search position.
+            </li>
+
+            <li>
+                Investigate position volatility when rankings appear unstable.
+            </li>
+
+            <li>
+                Inspect the page for outdated information, content gaps, relevance, and technical issues.
+            </li>
+
+            <li>
+                Record the evidence considered, review decision, and action taken.
+            </li>
+
+        </ol>
+
+
+        <p>
+            These priority groups are operational queue categories.
+            They are not definitive judgments about content quality or guaranteed predictions of future performance.
+        </p>
+
+    </section>
+
+
+    <!-- REPRODUCIBILITY -->
+
+    <section>
+
+        <h2>7. Reproducibility</h2>
+
+        <p>
+            The complete technical implementation is preserved in the project repository.
+            The capstone notebook contains the data preparation, feature engineering, model training, validation, evaluation, ranking, and artifact generation used for this study.
+        </p>
+
+        <p>
+            <a href="https://github.com/Sarahnjunge/starter-notebooks">
+                View the project repository
+            </a>
+        </p>
+
+        <p>
+            The capstone notebook is located at:
+        </p>
+
+        <div class="code-like">
+            work/notebooks/capstone.ipynb
+        </div>
+
+        <p>
+            The notebook should be treated as the reproducible technical implementation, while this page presents the research narrative and findings.
+        </p>
+
+    </section>
+
+
+    <!-- ACKNOWLEDGMENTS -->
+
+    <section>
+
+        <h2>8. Acknowledgments & Data Credit</h2>
+
+        <p>
+            Built on the
+            <a href="https://flyrank.ai">
+                FlyRank ML Internship dataset
+            </a>.
+        </p>
+
+        <p>
+            This project was completed as part of the FlyRank ML Internship capstone.
+        </p>
+
+    </section>
+
+
+    <footer>
+
+        <p>
+            Sarah Njunge · Machine Learning Research · 2026
+        </p>
+
+        <p>
+            This research is presented for educational and portfolio purposes.
+        </p>
+
+    </footer>
+
+</div>
+
+</body>
+</html>
